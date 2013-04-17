@@ -24,7 +24,7 @@ echo $U
 if [[ $U == "" ]]; then
 	echo "NO one logged in"
 	echo "Installing updates..."
-	#/usr/sbin/jamf policy -trigger livesoftwareupdate
+	/usr/sbin/jamf policy -trigger livesoftwareupdate
 fi
 exit 0
 
@@ -41,7 +41,7 @@ if [[ `/bin/echo "$?"` == 1 ]] ; then #updates with no reboot
 			/Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/MacOS/jamfHelper -windowType utility -icon /Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/Resources/Message.png -heading "Software Updates" -description "You have clicked No $FILECOUNT Times and Software updates are being applied. Please do not shutdown, close the lid, or reboot your computer now. This could damage your computer and require a rebuild with DATA LOSS!!"
 			
 			echo "Installing updates..."
-			#/usr/sbin/jamf policy -trigger livesoftwareupdate
+			/usr/sbin/jamf policy -trigger livesoftwareupdate
 			sleep 30
 			echo "0" > /var/db/.uitsLiveSoftwareUpdate
 			cat /var/db/.uitsLiveSoftwareUpdate
@@ -50,12 +50,12 @@ if [[ `/bin/echo "$?"` == 1 ]] ; then #updates with no reboot
 
 		else
 
-		FIRST=`/Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/MacOS/jamfHelper -windowType utility -icon /Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/Resources/Message.png -heading "Software Updates are Available" -description "Your Computer has software updates available. You have clicked No $FILECOUNT Times. You can click No $LEFT times. Would you like to install updates?" -button1 "Yes" -button2 "Cancel" -cancelButton "2"`
+		FIRST=`/Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/MacOS/jamfHelper -windowType utility -icon /Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/Resources/Message.png -heading "Software Updates are Available" -description "Your Computer has software updates available. You have clicked No $FILECOUNT Times. You can click No $LEFT times. Would you like to install updates?" -button1 "Yes" -button2 "No" -cancelButton "2"`
 	
 		if [ "$FIRST" == "0" ]; then
 			echo "Uesr clicked yes"
 			echo "Installing all updates"
-			#/usr/sbin/jamf policy -trigger livesoftwareupdate
+			/usr/sbin/jamf policy -trigger livesoftwareupdate
 			Sleep 30
 			echo "0" > /var/db/.uitsLiveSoftwareUpdate
 			cat /var/db/.uitsLiveSoftwareUpdate
@@ -78,20 +78,20 @@ else #updates with reboot
 /Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/MacOS/jamfHelper -windowType utility -icon /Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/Resources/Message.png -heading "Software Updates" -description "You have clicked No $FILECOUNT Times and Software updates are being applied. These updates require a reboot. After the updates finish installing you will have 5 minutes to save what your doing and the computer will reboot. Please do not shutdown, close the lid, or reboot your computer now. This could damage your computer and require a rebuild with DATA LOSS!!"
 
 			echo "Installing updates..."
-			#/usr/sbin/jamf policy -trigger livesoftwareupdate
+			/usr/sbin/jamf policy -trigger livesoftwareupdate
 			sleep 30
 			echo "0" > /var/db/.uitsLiveSoftwareUpdate
 			cat /var/db/.uitsLiveSoftwareUpdate
 			
 		else
 		
-		FIRST=`/Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/MacOS/jamfHelper -windowType utility -icon /Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/Resources/Message.png -heading "Software Updates are Available" -description "Your Computer has software updates available. These updates require a reboot. After the updates finish installing you will have 5 minutes to save what your doing and the computer will reboot. You have clicked No $FILECOUNT Times. You can click No $LEFT times. Would you like to install updates?" -button1 "Yes" -button2 "Cancel" -cancelButton "2"`
+		FIRST=`/Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/MacOS/jamfHelper -windowType utility -icon /Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/Resources/Message.png -heading "Software Updates are Available" -description "Your Computer has software updates available. These updates require a reboot. After the updates finish installing you will have 5 minutes to save what your doing and the computer will reboot. You have clicked No $FILECOUNT Times. You can click No $LEFT times. Would you like to install updates?" -button1 "Yes" -button2 "No" -cancelButton "2"`
 
 	
 		if [ "$FIRST" == "0" ]; then
 			echo "Uesr clicked yes first time"
 			echo "Installing all updates"
-			#/usr/sbin/jamf policy -trigger livesoftwareupdate
+			/usr/sbin/jamf policy -trigger livesoftwareupdate
 			echo "0" > /var/db/.uitsLiveSoftwareUpdate
 			cat /var/db/.uitsLiveSoftwareUpdate
 		else
