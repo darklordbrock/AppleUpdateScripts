@@ -28,30 +28,20 @@ FILECOUNT=`cat /var/db/.uitsLiveSoftwareUpdate`
 
 if [[ `/bin/echo "$?"` == 1 ]] ; then #updates with no reboot
 	if [ $FILECOUNT == "100" ]; then
-			echo "forcing update after 3 NOs"
-			/usr/bin/osascript <<-EOF
-				    tell application "System Events"
-				        activate
-				        display dialog "Software updates are being applied. Please do not shutdown, close the lid, or reboot your computer now. This could damage it and require a rebuild with DATA LOSS!!" buttons {"OK"}
-				    end tell
-			EOF
+			echo "forcing update after 100 NOs"
+	
+			/Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/MacOS/jamfHelper -windowType utility -icon /Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/Resources/Message.png -heading "Software Updates" -description "You have clicked No 100 Times and Software updates are being applied. Please do not shutdown, close the lid, or reboot your computer now. This could damage your computer and require a rebuild with DATA LOSS!!"
+			
 			/usr/sbin/jamf policy -trigger livesoftwareupdate
 			sleep 30
 			echo "0" > /var/db/.uitsLiveSoftwareUpdate
 			cat /var/db/.uitsLiveSoftwareUpdate
-			/usr/bin/osascript <<-EOF
-				    tell application "System Events"
-				        activate
-				        display dialog "Software updates have been installed. You can now sleep or shutdown your computer." buttons {"OK"}
-				    end tell
-			EOF
+
+			/Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/MacOS/jamfHelper -windowType utility -icon /Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/Resources/Message.png -heading "Software Updates" -description "Software updates have been installed. You can now sleep or shutdown your computer."
+
 		else
-		FIRST=`/usr/bin/osascript <<-EOF
-		    tell application "System Events"
-		        activate
-		        display dialog "There are currently software updates that need to be installed. Please do not shutdown, close the lid, or reboot your computer until you get the message they are done. This could damage your computer and require a rebuild with DATA LOSS!! Would you like to install them now?" buttons {"No","Yes"} default button 2
-		    end tell
-		EOF`
+
+		FIRST=`/Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/MacOS/jamfHelper -windowType utility -icon /Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/Resources/Message.png -heading "Software Updates are Available" -description "Would you like to install updates" -button1 "Yes" -button2 "Cancel" -cancelButton "2"`
 	
 		if [ "$FIRST" == "$YES" ]; then
 			echo "Uesr clicked yes"
@@ -60,12 +50,7 @@ if [[ `/bin/echo "$?"` == 1 ]] ; then #updates with no reboot
 			Sleep 30
 			echo "0" > /var/db/.uitsLiveSoftwareUpdate
 			cat /var/db/.uitsLiveSoftwareUpdate
-			/usr/bin/osascript <<-EOF
-				    tell application "System Events"
-				        activate
-				        display dialog "Software updates have been installed. You can go on as normal." buttons {"OK"}
-				    end tell
-			EOF
+
 			
 		else
 	
@@ -82,29 +67,22 @@ else #updates with reboot
 #####	
 	if [ $FILECOUNT == "100" ]; then
 			echo "forcing update after 99 NOs"
-			/usr/bin/osascript <<-EOF
-				    tell application "System Events"
-				        activate
-				        display dialog "Software updates are being applied. Please do not shutdown, close the lid, or reboot your computer now. This could damage it and require a rebuild with DATA LOSS!! When the install is finished your computer will reboot." buttons {"OK"}
-				    end tell
-			EOF
-			/usr/sbin/jamf policy -trigger livesoftwareupdate
+
+
+			#/usr/sbin/jamf policy -trigger livesoftwareupdate
 			sleep 30
 			echo "0" > /var/db/.uitsLiveSoftwareUpdate
 			cat /var/db/.uitsLiveSoftwareUpdate
 			
 		else
-		FIRST=`/usr/bin/osascript <<-EOF
-		    tell application "System Events"
-		        activate
-		        display dialog "There are currently software updates that need to be installed. When the install is finished your computer will reboot. Would you like to install them now?" buttons {"No","Yes"} default button 2
-		    end tell
-		EOF`
+		
+		FIRST=`/Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/MacOS/jamfHelper -windowType utility -icon /Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/Resources/Message.png -heading "Software Updates are Available" -description "Would you like to install updates" -button1 "Yes" -button2 "Cancel" -cancelButton "2"`
+
 	
-		if [ "$FIRST" == "$YES" ]; then
+		if [ "$FIRST" == "0" ]; then
 			echo "Uesr clicked yes first time"
 			echo "Installing all updates"
-			/usr/sbin/jamf policy -trigger livesoftwareupdate
+			#/usr/sbin/jamf policy -trigger livesoftwareupdate
 			echo "0" > /var/db/.uitsLiveSoftwareUpdate
 			cat /var/db/.uitsLiveSoftwareUpdate
 		else
