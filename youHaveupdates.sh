@@ -18,6 +18,16 @@ else
 	echo "made the file"
 fi
 
+U=`who |grep console| awk '{print $1}'`
+echo $U
+
+if [[ $U == "" ]]; then
+	echo "NO one logged in"
+	echo "Installing updates..."
+	#/usr/sbin/jamf policy -trigger livesoftwareupdate
+fi
+exit 0
+
 FILECOUNT=`cat /var/db/.uitsLiveSoftwareUpdate`
 
 LEFT=$((42 - $FILECOUNT))
