@@ -28,7 +28,7 @@ if [[ `/bin/echo "$?"` == 1 ]] ; then #updates with no reboot
 	
 			/Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/MacOS/jamfHelper -windowType utility -icon /Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/Resources/Message.png -heading "Software Updates" -description "You have clicked No 100 Times and Software updates are being applied. Please do not shutdown, close the lid, or reboot your computer now. This could damage your computer and require a rebuild with DATA LOSS!!"
 			
-			/usr/sbin/jamf policy -trigger livesoftwareupdate
+			#/usr/sbin/jamf policy -trigger livesoftwareupdate
 			sleep 30
 			echo "0" > /var/db/.uitsLiveSoftwareUpdate
 			cat /var/db/.uitsLiveSoftwareUpdate
@@ -42,7 +42,7 @@ if [[ `/bin/echo "$?"` == 1 ]] ; then #updates with no reboot
 		if [ "$FIRST" == "0" ]; then
 			echo "Uesr clicked yes"
 			echo "Installing all updates"
-			/usr/sbin/jamf policy -trigger livesoftwareupdate
+			#/usr/sbin/jamf policy -trigger livesoftwareupdate
 			Sleep 30
 			echo "0" > /var/db/.uitsLiveSoftwareUpdate
 			cat /var/db/.uitsLiveSoftwareUpdate
