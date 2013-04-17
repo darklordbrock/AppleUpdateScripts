@@ -11,10 +11,6 @@
 # at the Univeristy of Wisconsin Milwaukee
 ##############
 
-
-YES=`echo "button returned:Yes"`
-NO=`echo "button returned:No"`
-
 if [ -f /var/db/.uitsLiveSoftwareUpdate ]; then
 	echo "file is here"
 else
@@ -43,7 +39,7 @@ if [[ `/bin/echo "$?"` == 1 ]] ; then #updates with no reboot
 
 		FIRST=`/Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/MacOS/jamfHelper -windowType utility -icon /Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/Resources/Message.png -heading "Software Updates are Available" -description "Would you like to install updates" -button1 "Yes" -button2 "Cancel" -cancelButton "2"`
 	
-		if [ "$FIRST" == "$YES" ]; then
+		if [ "$FIRST" == "0" ]; then
 			echo "Uesr clicked yes"
 			echo "Installing all updates"
 			/usr/sbin/jamf policy -trigger livesoftwareupdate
