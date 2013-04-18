@@ -28,8 +28,10 @@ if [[ $U == "" ]]; then
 	echo "NO one logged in"
 	echo "Installing updates..."
 	/usr/sbin/jamf policy -trigger livesoftwareupdate
+	echo "Updates have been installed at the login window"
+	exit 0
 fi
-exit 0
+
 
 FILECOUNT=`cat /var/db/.uitsLiveSoftwareUpdate`
 
@@ -41,8 +43,7 @@ if [[ `/bin/echo "$?"` == 1 ]] ; then #updates with no reboot
 	if [ $FILECOUNT == "42" ]; then
 			echo "forcing update after 42 NOs"
 			
-			
-#			/Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/MacOS/jamfHelper -windowType utility -icon /Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/Resources/Message.png -heading "Software Updates" -description "You have clicked No $FILECOUNT Times and Software updates are being applied. Please do not shutdown, close the lid, or reboot your computer now. This could damage your computer and require a rebuild with DATA LOSS!!"
+			$CD ok-msgbox --no-cancel --icon-file --icon-file $CDI/gear.icns --float  --title "Software Updates " --text "Software updates are being applied." --informative-text "You have clicked No $FILECOUNT Times. Please do not shutdown, close the lid, or reboot your computer now. This could damage your computer and require a rebuild with DATA LOSS!!"
 			
 			echo "Installing updates..."
 			/usr/sbin/jamf policy -trigger livesoftwareupdate
@@ -50,13 +51,12 @@ if [[ `/bin/echo "$?"` == 1 ]] ; then #updates with no reboot
 			echo "0" > /var/db/.uitsLiveSoftwareUpdate
 			cat /var/db/.uitsLiveSoftwareUpdate
 
-#			/Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/MacOS/jamfHelper -windowType utility -icon /Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/Resources/Message.png -heading "Software Updates" -description "Software updates have been installed. You can now sleep, shutdown, or use your computer as normal."
-
+			$CD bubble --icon-file $CDI/gear.icns --background-top "00cb24" --background-bottom "aefe95" --timeout 600 --title "Software Updates" --text "Software updates have been installed. You can now sleep, shutdown, or use your computer as normal."
+			
 		else
 
 			FIRST=`$CD yesno-msgbox --no-cancel --string-output --icon-file $CDI/gear.icns --string-output --title "Software Updates are Available" --text "Your Computer has software updates available." --informative-text "   Would you like to install updates now?
-			   You have clicked No $FILECOUNT times, you can click No $LEFT times."`
-#		FIRST=`/Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/MacOS/jamfHelper -windowType utility -icon /Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/Resources/Message.png -heading "Software Updates are Available" -description "Your Computer has software updates available. You have clicked No $FILECOUNT Times. You can click No $LEFT times. Would you like to install updates?" -button1 "Yes" -button2 "No" -cancelButton "2"`
+			   You have clicked No $FILECOUNT times, you can click No $LEFT more times."`
 	
 		if [ "$FIRST" == "0" ]; then
 			echo "Uesr clicked yes"
@@ -65,6 +65,8 @@ if [[ `/bin/echo "$?"` == 1 ]] ; then #updates with no reboot
 			Sleep 30
 			echo "0" > /var/db/.uitsLiveSoftwareUpdate
 			cat /var/db/.uitsLiveSoftwareUpdate
+
+			$CD bubble --icon-file $CDI/gear.icns --background-top "00cb24" --background-bottom "aefe95" --timeout 600 --title "Software Updates" --text "Software updates have been installed. You can now sleep, shutdown, or use your computer as normal."
 
 		else
 	
@@ -81,8 +83,9 @@ else #updates with reboot
 #####	
 	if [ $FILECOUNT == "42" ]; then
 			echo "forcing update after 42 NOs"
-#/Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/MacOS/jamfHelper -windowType utility -icon /Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/Resources/Message.png -heading "Software Updates" -description "You have clicked No $FILECOUNT Times and Software updates are being applied. These updates require a reboot. After the updates finish installing you will have 5 minutes to save what your doing and the computer will reboot. Please do not shutdown, close the lid, or reboot your computer now. This could damage your computer and require a rebuild with DATA LOSS!!"
 
+			$CD ok-msgbox --no-cancel --icon-file --icon-file $CDI/gear.icns --float  --title "Software Updates" --text "Software updates are being applied!" --informative-text "You have clicked No $FILECOUNT Times. These updates require a reboot. After the updates finish installing you will have 5 minutes to save what your doing and your computer will reboot. Please do not shutdown, close the lid, or reboot your computer now. This could damage your computer and require a rebuild with DATA LOSS!!"
+			
 			echo "Installing updates..."
 			/usr/sbin/jamf policy -trigger livesoftwareupdate
 			sleep 30
@@ -91,8 +94,9 @@ else #updates with reboot
 			
 		else
 		
-#		FIRST=`/Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/MacOS/jamfHelper -windowType utility -icon /Library/Application\ Support/JAMF/bin/jamfHelper.app/Contents/Resources/Message.png -heading "Software Updates are Available" -description "Your Computer has software updates available. These updates require a reboot. After the updates finish installing you will have 5 minutes to save what your doing and the computer will reboot. You have clicked No $FILECOUNT Times. You can click No $LEFT times. Would you like to install updates?" -button1 "Yes" -button2 "No" -cancelButton "2"`
+FIRST=`$CD yesno-msgbox --no-cancel --string-output --icon-file $CDI/gear.icns --string-output --title "Software Updates are Available" --text "Your Computer has software updates available." --informative-text "These updates require a reboot. After the updates finish installing you will have 5 minutes to save what your doing and the computer will reboot.
 
+   You have clicked No $FILECOUNT times, you can click No $LEFT more times."`
 	
 		if [ "$FIRST" == "0" ]; then
 			echo "Uesr clicked yes first time"
