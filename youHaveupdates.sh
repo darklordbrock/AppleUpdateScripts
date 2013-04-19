@@ -58,7 +58,7 @@ if [[ `/bin/echo "$?"` == 1 ]] ; then #updates with no reboot
 			FIRST=`$CD yesno-msgbox --no-cancel --string-output --icon-file $CDI/gear.icns --string-output --title "Software Updates are Available" --text "Your Computer has software updates available." --informative-text "   Would you like to install updates now?
 			   You have clicked No $FILECOUNT times, you can click No $LEFT more times."`
 	
-		if [ "$FIRST" == "0" ]; then
+		if [ "$FIRST" == "Yes" ]; then
 			echo "Uesr clicked yes"
 			echo "Installing all updates"
 			/usr/sbin/jamf policy -trigger livesoftwareupdate
@@ -98,14 +98,14 @@ FIRST=`$CD yesno-msgbox --no-cancel --string-output --icon-file $CDI/gear.icns -
 
    You have clicked No $FILECOUNT times, you can click No $LEFT more times."`
 	
-		if [ "$FIRST" == "0" ]; then
-			echo "Uesr clicked yes first time"
+		if [ "$FIRST" == "Yes" ]; then
+			echo "Uesr clicked yes"
 			echo "Installing all updates"
 			/usr/sbin/jamf policy -trigger livesoftwareupdate
 			echo "0" > /var/db/.uitsLiveSoftwareUpdate
 			cat /var/db/.uitsLiveSoftwareUpdate
 		else
-			echo "User clicked no first time"
+			echo "User clicked no"
 			NUM=$(($FILECOUNT + 1))
 			echo $NUM > /var/db/.uitsLiveSoftwareUpdate
 			echo $NUM
