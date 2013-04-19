@@ -51,7 +51,7 @@ if [[ `/bin/echo "$?"` == 1 ]] ; then #updates with no reboot
 			echo "0" > /var/db/.uitsLiveSoftwareUpdate
 			cat /var/db/.uitsLiveSoftwareUpdate
 
-			$CD bubble --icon-file $CDI/gear.icns --background-top "00cb24" --background-bottom "aefe95" --timeout 600 --title "Software Updates" --text "Software updates have been installed. You can now sleep, shutdown, or use your computer as normal."
+			$CD bubble --icon-file $CDI/gear.icns --background-top "00cb24" --background-bottom "aefe95" --timeout 600 --title "Software Updates" --text "Updates have been installed. You can use your computer as normal."
 			
 		else
 
@@ -66,7 +66,7 @@ if [[ `/bin/echo "$?"` == 1 ]] ; then #updates with no reboot
 			echo "0" > /var/db/.uitsLiveSoftwareUpdate
 			cat /var/db/.uitsLiveSoftwareUpdate
 
-			$CD bubble --icon-file $CDI/gear.icns --background-top "00cb24" --background-bottom "aefe95" --timeout 600 --title "Software Updates" --text "Software updates have been installed. You can now sleep, shutdown, or use your computer as normal."
+			$CD bubble --icon-file $CDI/gear.icns --background-top "00cb24" --background-bottom "aefe95" --timeout 600 --title "Software Updates" --text "Updates have been installed. You can use your computer as normal."
 
 		else
 	
