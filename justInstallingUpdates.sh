@@ -27,7 +27,7 @@ if [[ `/bin/echo "$?"` == 1 ]] ; then #updates with no reboot
 		
 	echo "Telling the user that updates are being installed"
 	
-	$CD bubble --icon-file $CDI/gear.icns --background-top "00cb24" --background-bottom "aefe95" --timeout 60 --title "Software Updates" --text "Updates have been installed. You can use your computer as normal."
+	$CD bubble --icon-file $CDI/gear.icns --background-top "00cb24" --background-bottom "aefe95" --timeout 60 --title "Software Updates" --text "Updates are currently being installed."
 	
 	
 	/usr/sbin/jamf policy -trigger livesoftwareupdate
@@ -42,7 +42,7 @@ else #updates with reboot
 
 	echo "Telling the user that updates are being installed"
 	
-	$CD bubble --icon-file $CDI/gear.icns --background-top "00cb24" --background-bottom "aefe95" --timeout 60 --title "Software Updates" --text "Updates have been installed. You can use your computer as normal."
+	$CD bubble --icon-file $CDI/gear.icns --background-top "00cb24" --background-bottom "aefe95" --timeout 60 --title "Software Updates" --text "Updates are currently being installed."
 
 
 	/usr/sbin/jamf policy -trigger livesoftwareupdate
