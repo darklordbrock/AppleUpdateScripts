@@ -39,17 +39,41 @@ if [[ `/bin/echo "$?"` == 1 ]] ; then #updates with no reboot
 #####	
 else #updates with reboot
 #####	
-
-	echo "Telling the user that updates are being installed"
 	
-	$CD bubble --icon-file $CDI/gear.icns --background-top "00cb24" --background-bottom "aefe95" --timeout 60 --title "Software Updates" --text "Updates are currently being installed."
-
-
-	/usr/sbin/jamf policy -trigger livesoftwareupdate
-	echo "1" > /var/db/.uitsComputerNeedsReboot
+	/usr/sbin/softwareupdate -l | grep -i "firmware"
 	
-	echo "Updates have been installed, told the user they are complete, and the computer needs to be rebooted."	
+	if [[ `/bin/echo "$?"` == 1 ]]; then
+		
+		echo "Telling the user that updates are being installed"
 	
-	$CD bubble --icon-file $CDI/gear.icns --background-top "00cb24" --background-bottom "aefe95" --timeout 60 --title "Software Updates" --text "Updates have been installed. You computer needs a reboot to complete the updates. Please do so as soon as possible"
+		$CD bubble --icon-file $CDI/gear.icns --background-top "00cb24" --background-bottom "aefe95" --timeout 60 --title "Software Updates" --text "Updates are currently being installed."
 
+
+		/usr/sbin/jamf policy -trigger livesoftwareupdate
+		echo "1" > /var/db/.uitsComputerNeedsReboot
+	
+		echo "Updates have been installed, told the user they are complete, the computer needs to be rebooted, while plugged into power if a laptop."	
+	
+		
+		$CD bubble --icon-file $CDI/gear.icns --background-top "00cb24" --background-bottom "aefe95" --timeout 60 --title "Software Updates" --text "Updates have been installed. You computer needs a reboot while plugged into power to complete the updates. Please do so as soon as possible"
+		
+	#####
+	else #updates for firmware
+	#####
+		
+		echo "Telling the user that updates are being installed"
+	
+		$CD bubble --icon-file $CDI/gear.icns --background-top "00cb24" --background-bottom "aefe95" --timeout 60 --title "Software Updates" --text "Updates are currently being installed."
+
+
+		/usr/sbin/jamf policy -trigger livesoftwareupdate
+		echo "1" > /var/db/.uitsComputerNeedsReboot
+	
+		echo "Updates have been installed, told the user they are complete, and the computer needs to be rebooted."	
+	
+		$CD bubble --icon-file $CDI/gear.icns --background-top "00cb24" --background-bottom "aefe95" --timeout 60 --title "Software Updates" --text "Updates have been installed. You computer needs a reboot to complete the updates. Please do so as soon as possible"
+		
+	fi
+	
+	
 fi

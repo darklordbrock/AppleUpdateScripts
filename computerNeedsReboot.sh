@@ -13,6 +13,7 @@ fi
 NEED=`cat /var/db/.uitsComputerNeedsReboot`
 
 echo "Need = " $NEED
+
 if [[ NEED = "1" ]]; then
 	echo "Computer does need to be rebooted"
 	$CD bubble --icon-file $CDI/gear.icns --background-top "00cb24" --background-bottom "aefe95" --timeout 60 --title "Software Updates" --text "You computer needs a reboot, please do so as soon as possible"
