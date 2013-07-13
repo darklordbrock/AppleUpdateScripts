@@ -34,7 +34,7 @@ if [[ `/bin/echo "$?"` == 1 ]] ; then #updates with no reboot
 		
 	echo "Updates have been installed and told the user they are complete"	
 	
-	$CD bubble --icon-file $CDI/gear.icns --background-top "00cb24" --background-bottom "aefe95" --timeout 60 --title "Software Updates" --text "Updates have been installed. You can use your computer as normal."
+	$CD bubble --icon-file $CDI/info.icns --background-top "00cb24" --background-bottom "aefe95" --timeout 60 --title "Software Updates" --text "Updates have been installed. You can use your computer as normal."
 	
 #####	
 else #updates with reboot
@@ -54,7 +54,7 @@ else #updates with reboot
 	
 		echo "Updates have been installed, told the user they are complete, the computer needs to be rebooted, while plugged into power if a laptop."	
 	
-		$CD bubble --icon-file $CDI/gear.icns --background-top "00cb24" --background-bottom "aefe95" --timeout 60 --title "Software Updates" --text "Updates have been installed. You computer needs a reboot while plugged into power to complete the updates. Please do so as soon as possible"
+		$CD bubble --icon-files $CDI/info.icns $CDI/computer.icns --background-top "00cb24" --background-bottom "aefe95" --timeout 60 --titles "Software Updates" "Restart" --texts "Updates have been installed." "Please restart while plugged into power to complete the updates."  
 		
 	#####
 	else #updates for firmware
@@ -70,7 +70,7 @@ else #updates with reboot
 	
 		echo "Updates have been installed, told the user they are complete, and the computer needs to be rebooted."	
 	
-		$CD bubble --icon-file $CDI/gear.icns --background-top "00cb24" --background-bottom "aefe95" --timeout 60 --title "Software Updates" --text "Updates have been installed. You computer needs a reboot to complete the updates. Please do so as soon as possible"
+		$CD bubble --icon-files $CDI/info.icns $CDI/computer.icns --background-top "00cb24" --background-bottom "aefe95" --timeout 60 --titles "Software Updates" "Restart" --texts "Updates have been installed." "You computer needs a restart to complete the updates."
 		
 	fi
 	
