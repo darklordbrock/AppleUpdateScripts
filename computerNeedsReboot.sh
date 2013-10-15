@@ -1,7 +1,5 @@
 #!/bin/bash
 
-CD="/Applications/Utilities/CocoaDialog.app/Contents/MacOS/CocoaDialog"
-CDI="/Applications/Utilities/CocoaDialog.app/Contents/Resources"
 
 if [ -f /var/db/.uitsComputerNeedsReboot ]; then
 	echo "file is here"
@@ -16,7 +14,7 @@ echo "Need = " $NEED
 
 if [[ NEED = "1" ]]; then
 	echo "Computer does need to be rebooted"
-	$CD bubble --icon-file $CDI/gear.icns --background-top "00cb24" --background-bottom "aefe95" --timeout 60 --title "Software Updates" --text "You computer needs a reboot, please do so as soon as possible"
+	/usr/sbin/jamf policy -trigger UITScomputerNeedsReboot
 else
 	echo "Computer does not need to be rebooted"
 	exit 0
