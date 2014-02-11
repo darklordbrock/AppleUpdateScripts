@@ -8,11 +8,13 @@
 	<string>edu.uwm.uits.brockma9.checkForRebootNeed</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/Library/.uits/computerNeedsReboot.sh</string>
+		<string>/Library/.uwm/UITS-computerNeedsReboot.sh</string>
 	</array>
 	<key>QueueDirectories</key>
 	<array/>
 	<key>StartInterval</key>
-	<integer>3600</integer> 
+	<integer>3600</integer>
+	<key>RunAtLoad</key>
+	<true/>
 </dict>
 </plist>

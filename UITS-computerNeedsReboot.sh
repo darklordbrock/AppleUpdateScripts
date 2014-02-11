@@ -12,7 +12,7 @@ NEED=`cat /var/db/.uitsComputerNeedsReboot`
 
 echo "Need = " $NEED
 
-if [[ NEED = "1" ]]; then
+if [[ $NEED = "1" ]]; then
 	echo "Computer does need to be rebooted"
 	/usr/sbin/jamf policy -trigger UITScomputerNeedsReboot
 else
